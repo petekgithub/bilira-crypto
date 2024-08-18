@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SparklineChart from "./SparklineChart";
 
 interface Asset {
+  symbol: string; // Added symbol field
   name: string;
   price: number;
   marketValue: number;
@@ -18,29 +19,31 @@ const TableRow = ({ asset, previousPrice }: TableRowProps) => {
 
   useEffect(() => {
     if (asset.price > previousPrice) {
-      setFlashColor("bg-green-100"); // Pozitif değişiklik için açık yeşil
+      setFlashColor("bg-green-100"); // Positive change color
     } else if (asset.price < previousPrice) {
-      setFlashColor("bg-red-100"); // Negatif değişiklik için açık kırmızı
+      setFlashColor("bg-red-100"); // Negative change color
     }
 
-    const timer = setTimeout(() => setFlashColor(null), 1000); // 1 saniye sonra renk sıfırlanır
+    const timer = setTimeout(() => setFlashColor(null), 1000); // Reset color after 1 second
 
-    return () => clearTimeout(timer); // Bileşen kaldırıldığında timer'ı temizle
+    return () => clearTimeout(timer); // Clear timer on component unmount
   }, [asset.price, previousPrice]);
 
-  // Örnek veri, gerçek veri ile değiştirilmeli
+  // Sample data for sparkline
   const sparklineData = Array.from({ length: 24 }, (_, index) => ({
     time: `${index}h`,
-    value: Math.random() * 100, // Örnek değer, gerçek veri ile değiştirilmeli
+    value: Math.random() * 100, // Example value, replace with real data
   }));
 
-  // Dinamik sınıf isimlerini belirlemek için koşul ifadelerini kullanın
+  // Determine color class for change
   const changeColorClass =
     asset.change24h >= 0 ? "text-green-500" : "text-red-500";
 
   return (
     <tr className={`transition-all ${flashColor}`}>
-      <td className="p-2 border-b border-gray-200">{asset.name}</td>
+      <td className="p-2 border-b border-gray-200">
+        {asset.symbol} / USDT {/* Display symbol with /USDT */}
+      </td>
       <td className="p-2 border-b border-gray-200">{asset.price.toFixed(2)}</td>
       <td className="p-2 border-b border-gray-200">
         {asset.marketValue.toFixed(2)}

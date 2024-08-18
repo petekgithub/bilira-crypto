@@ -40,3 +40,5 @@ Daha fazla yapılandırma seçeneği sunar.
 Daha basit ve hafif bir kütüphanedir.
 Yalnızca küçük grafikler için uygundur (sparkline'lar).
 Kullanımı ve entegrasyonu daha basit olabilir.
+
+![Alt text](image link)

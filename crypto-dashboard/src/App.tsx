@@ -11,21 +11,22 @@ const App = () => {
     const fetchData = async () => {
       try {
         const data = await fetchAssets();
+        console.log("Fetched assets:", data); 
         setAssets(data);
       } catch (err) {
         setError("Failed to fetch assets");
       }
     };
 
-    fetchData(); // İlk veri çekimi
-    const intervalId = setInterval(fetchData, 60000); // Her dakika veriyi yenile
+    fetchData();
+    const intervalId = setInterval(fetchData, 60000);
 
-    return () => clearInterval(intervalId); // Bileşen kaldırıldığında interval'ı temizle
+    return () => clearInterval(intervalId);
   }, []);
 
   // Dummy data for previousPrices, replace with real data
   const previousPrices = assets.reduce((acc, asset) => {
-    acc[asset.name] = asset.price; // Önceki fiyatları sakla
+    acc[asset.symbol] = asset.price; // Önceki fiyatları sakla
     return acc;
   }, {} as { [key: string]: number });
 
